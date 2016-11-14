@@ -23,7 +23,7 @@ class Main extends React.Component {
 
   onIconClicked() {
     console.log("Icon clicked");
-    Storage.save('openTimes', route.isFirst + 1);
+    Storage.save('openTimes', this.props.route.isFirst + 1);
   }
 
   onPressRedux() {
@@ -35,6 +35,12 @@ class Main extends React.Component {
     const {navigator, route, reducer} = this.props;
     return (
       <View style={styles.container}>
+        <TopToolbar
+          title="Main"
+          navigator={navigator}
+          onIconClicked={this.onIconClicked}
+          navIconName="md-menu"
+        />
         <Text onPress={() => this.onPressRedux()}>
           {reducer.value + '\n'}
           {route.isFirst + '\n'}
@@ -49,17 +55,7 @@ class Main extends React.Component {
             renderSelectedIcon={() => <Icon name={ 'ios-home' } size={26} color={'#4E78E7'}/>}
             badgeText="1"
             onPress={() => this.setState({ selectedTab: 'home' })}>
-              <View />
-          </TabNavigator.Item>
-          <TabNavigator.Item
-            selected={this.state.selectedTab === 'more'}
-            title="More"
-            selectedTitleStyle={styles.selectedTextStyle}
-            titleStyle={styles.textStyle}
-            renderIcon={() => <Icon name={ 'ios-more' } size={26} color={'gray'}/>}
-            renderSelectedIcon={() => <Icon name={ 'ios-more' } size={26} color={'#4E78E7'}/>}
-            onPress={() => this.setState({ selectedTab: 'more' })}>
-              <View />
+              <Home {...this.props} />
           </TabNavigator.Item>
           <TabNavigator.Item
             selected={this.state.selectedTab === 'more'}
