@@ -15,59 +15,38 @@ import Home from './Home';
 class Main extends React.Component {
   constructor(props) {
     super(props);
-    this.onIconClicked = this.onIconClicked.bind(this);
-    this.state = {
-      selectedTab:'home'
-    };
   }
 
-  onIconClicked() {
-    console.log("Icon clicked");
-    Storage.save('openTimes', this.props.route.isFirst + 1);
-  }
-
-  onPressRedux() {
-    const {actions} = this.props;
-    actions.onIncrement();
+  onHandleSelect(value) {
+    console.log(value);
   }
 
   render() {
     const {navigator, route, reducer} = this.props;
     return (
       <View style={styles.container}>
-        <TopToolbar
+        <TopToolbarDock
           title="Main"
-          navigator={navigator}
-          onIconClicked={this.onIconClicked}
-          navIconName="md-menu"
-        />
-        <Text onPress={() => this.onPressRedux()}>
-          {reducer.value + '\n'}
-          {route.isFirst + '\n'}
-        </Text>
-        <TabNavigator>
-          <TabNavigator.Item
-            selected={this.state.selectedTab === 'home'}
-            title="Home"
-            selectedTitleStyle={styles.selectedTextStyle}
-            titleStyle={styles.textStyle}
-            renderIcon={() => <Icon name={ 'ios-home' } size={26} color={'gray'}/>}
-            renderSelectedIcon={() => <Icon name={ 'ios-home' } size={26} color={'#4E78E7'}/>}
-            badgeText="1"
-            onPress={() => this.setState({ selectedTab: 'home' })}>
-              <Home {...this.props} />
-          </TabNavigator.Item>
-          <TabNavigator.Item
-            selected={this.state.selectedTab === 'more'}
-            title="More"
-            selectedTitleStyle={styles.selectedTextStyle}
-            titleStyle={styles.textStyle}
-            renderIcon={() => <Icon name={ 'ios-more' } size={26} color={'gray'}/>}
-            renderSelectedIcon={() => <Icon name={ 'ios-more' } size={26} color={'#4E78E7'}/>}
-            onPress={() => this.setState({ selectedTab: 'more' })}>
-              <View />
-          </TabNavigator.Item>
-        </TabNavigator>
+          navigator={navigator}>
+          <Icon.Button
+            iconStyle={styles.rightIOS}
+            name="ios-create-outline"
+            backgroundColor="transparent"
+            underlayColor="transparent"
+            activeOpacity={0.8}
+            onPress={()=>this.onHandleSelect(1)}
+          /> 
+          <MenuButton  
+            buttonStyle={[styles.rightIOS]} 
+            button={<Icon name={ 'ios-apps-outline' } size={26} color={'gray'}/> }
+            optionsStyle={{top:58, width: 150}}
+            menuGroup={menuGroup}
+            onSelect={()=>this.onHandleSelect(2)} 
+            optionStyle={styles.menuOption}
+            optionTextStyle={styles.menuText}
+            optionImageStyle={styles.menuImage}
+          />
+        </TopToolbarDock>
       </View>
     );
   }
