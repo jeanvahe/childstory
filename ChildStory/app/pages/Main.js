@@ -5,11 +5,8 @@ import {
   Text
 } from 'react-native';
 
-import TopToolbar from '../components/TopToolbar';
-import TabNavigator from 'react-native-tab-navigator';
+import TopToolbarDock from '../components/TopToolbarDock';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ScrollableTabView,{DefaultTabBar} from 'react-native-scrollable-tab-view';
-import Storage from '../utils/Storage';
 import Home from './Home';
 
 class Main extends React.Component {
@@ -18,7 +15,18 @@ class Main extends React.Component {
   }
 
   onHandleSelect(value) {
-    console.log(value);
+    const { navigator } = this.props;
+    if (value === 1) {
+      navigator.push({
+        component: ChidStorySets,
+        name: 'ChidStorySets'
+      });
+    } else if (value === 2) {
+      navigator.push({
+        component: ChidStoryPublic,
+        name: 'ChidStoryPublic'
+      });
+    }
   }
 
   render() {
