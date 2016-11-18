@@ -81,6 +81,7 @@ const TopToolbar = ({
             <Button
               containerStyle={showActionButton ? styles.rightIOS : styles.zero}
               style={styles.rightText}
+              disabled={action.disabled}
               text={showActionButton ? action.title : ''}
               onPress={onActionSelected}
             />

@@ -14,6 +14,19 @@ class Main extends React.Component {
     super(props);
   }
 
+  componentDidMount() {
+    const { storysetsActions } = this.props;
+    InteractionManager.runAfterInteractions(() => {
+      Storage.get('storysets')
+        .then((storysets) => {
+          if (!storysets) {
+            return;
+          }
+          storysetsActions.loadStorySet(storysets);
+        });
+    });
+  }
+
   onHandleSelect(value) {
     const { navigator } = this.props;
     if (value === 1) {
@@ -30,7 +43,7 @@ class Main extends React.Component {
   }
 
   render() {
-    const {navigator, route, reducer} = this.props;
+    const {navigator, route} = this.props;
     return (
       <View style={styles.container}>
         <TopToolbarDock

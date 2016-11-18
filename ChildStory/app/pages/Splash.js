@@ -25,19 +25,20 @@ class Splash extends React.Component {
     ).start();
     this.timer = setTimeout(() => {
       const { navigator } = this.props;
-      Storage.get('openTimes')
-      .then((openTimes) => {
-        if (!openTimes) {
+      Storage.get('isInit')
+      .then((isInit) => {
+        if (!isInit) {
+          Storage.save((
           navigator.resetTo({
             component: MainContainer,
             name: 'Main',
-            isFirst: 0
+            isFirst: true
           });
         } else {
           navigator.resetTo({
             component: MainContainer,
             name: 'Main',
-            isFirst: openTimes
+            isFirst: false
           });
         }
       });
