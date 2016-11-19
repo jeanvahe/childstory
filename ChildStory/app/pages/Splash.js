@@ -28,7 +28,6 @@ class Splash extends React.Component {
       Storage.get('isInit')
       .then((isInit) => {
         if (!isInit) {
-          Storage.save((
           navigator.resetTo({
             component: MainContainer,
             name: 'Main',

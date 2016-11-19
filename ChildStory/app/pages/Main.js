@@ -2,12 +2,17 @@ import React, { PropTypes } from 'react';
 import {
   View,
   StyleSheet,
+  InteractionManager,
   Text
 } from 'react-native';
 
 import TopToolbarDock from '../components/TopToolbarDock';
+import MenuButton from 'react-native-menu-button';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Home from './Home';
+import Storage from '../utils/Storage';    
+
+import ChidStorySets from './ChidStorySets';
+
 
 class Main extends React.Component {
   constructor(props) {
@@ -44,6 +49,8 @@ class Main extends React.Component {
 
   render() {
     const {navigator, route} = this.props;
+const menuGroup= [{key:"0",value:"menu1",text:"发起群聊"},{key:"1",value:"menu2",text:"添加朋友"},{key:"2",value:     "menu3",text:"扫一扫"},{key:"3",value:"menu4",text:"收付款" }]
+
     return (
       <View style={styles.container}>
         <TopToolbarDock
@@ -65,7 +72,6 @@ class Main extends React.Component {
             onSelect={()=>this.onHandleSelect(2)} 
             optionStyle={styles.menuOption}
             optionTextStyle={styles.menuText}
-            optionImageStyle={styles.menuImage}
           />
         </TopToolbarDock>
       </View>
@@ -83,6 +89,22 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle:{
     color:'black',
+  },
+  rightIOS: {
+    marginTop: 20,
+    marginRight: 8
+  },
+  menuOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd'
+  },
+  menuText: {
+    fontSize: 15,
+    marginLeft: 15,
+    color: 'black'
   }
 });
 export default Main;
