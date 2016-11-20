@@ -10,7 +10,7 @@ import TopToolbar from '../components/TopToolbar';
 import { toastShort } from '../utils/ToastUtil';
 
 const toolbarActions = [
-  { title: '保存', disabled: true, iconName: 'md-checkmark', show: 'no' }
+  { title: '保存', disabled: true, iconName: 'md-checkmark', show: 'always' }
 ];
 
 let feedbackText;
@@ -19,7 +19,7 @@ class ChildStoryAdd extends React.Component {
   constructor(props) {
     super(props);
     this.onActionSelected = this.onActionSelected.bind(this);
-    this.setState({hasInput: false});
+    this.state = {hasInput: false};
   }
 
   onActionSelected() {
@@ -48,6 +48,8 @@ class ChildStoryAdd extends React.Component {
         <TopToolbar
           title="Main"
           navigator={navigator}
+          onActionSelected={this.onActionSelected}
+          actions={toolbarActions}
         />
         <TextInput
           style={styles.textInput}

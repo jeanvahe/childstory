@@ -37,7 +37,8 @@ class Main extends React.Component {
     if (value === 1) {
       navigator.push({
         component: ChidStorySets,
-        name: 'ChidStorySets'
+        name: 'ChidStorySets',
+        storysets: this.props.storysets.storysets
       });
     } else if (value === 2) {
       navigator.push({
@@ -50,6 +51,7 @@ class Main extends React.Component {
   render() {
     const {navigator, route} = this.props;
 const menuGroup= [{key:"0",value:"menu1",text:"发起群聊"},{key:"1",value:"menu2",text:"添加朋友"},{key:"2",value:     "menu3",text:"扫一扫"},{key:"3",value:"menu4",text:"收付款" }]
+  console.log(this.props);
 
     return (
       <View style={styles.container}>

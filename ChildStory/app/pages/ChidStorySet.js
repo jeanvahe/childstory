@@ -3,10 +3,14 @@ import {
   View,
   StyleSheet,
   TextInput,
+  ListView,
+  RecyclerViewBackedScrollView,
+  TouchableOpacity,
   Text
 } from 'react-native';
 
 import TopToolbar from '../components/TopToolbar';
+import ChidStoryAdd from './ChidStoryAdd';
 
 const toolbarActions = [
   { title: '增加', iconName: 'md-add', show: 'always' }
@@ -16,25 +20,28 @@ class ChidStorySet extends React.Component {
   constructor(props) {
     super(props);
     this.onActionSelected = this.onActionSelected.bind(this);
+    this.renderItem = this.renderItem.bind(this); 
     let dataSource = new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
     });
     this.state = {
-      dataSource: dataSource.cloneWithRows(this.props.storyset.storyset.stories[this.props.route.rowid]),
+      dataSource: dataSource.cloneWithRows([]),
     }
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      dataSource: dataSource.cloneWithRows(this.props.storyset.storyset.stories[this.props.route.rowid]),
+      dataSource: this.state.dataSource.cloneWithRows(nextProps.route.storysets[nextProps.route.rowid].stories),
     });
   }
 
   onActionSelected() {
+    const { navigator } = this.props;
     navigator.push({
       component: ChidStoryAdd,
       name: 'ChidStoryAdd',
-      rowid: this.props.route.rowid
+      rowid: this.props.route.rowid,
+      storysets: this.props.route.storysets
     });
   }
 
@@ -43,7 +50,7 @@ class ChidStorySet extends React.Component {
 
   renderItem(story, sectionid, rowid) {
     return (
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={() => this.onPress(story)}>
         <View style={styles.containerItem}>
           <Text>
              {story.content}
@@ -67,12 +74,12 @@ class ChidStorySet extends React.Component {
         <TouchableOpacity onPress={() => {}}>
           <View style={styles.containerItem}>
             <Text>
-               {route.storyset.title}
+               {route.storysets[route.rowid].title}
             </Text>
           </View>
         </TouchableOpacity>
         <ListView
-          initialListSize={1}
+          initialListSize={0}
           dataSource={this.state.dataSource}
           renderRow={this.renderItem}
           style={styles.listView}

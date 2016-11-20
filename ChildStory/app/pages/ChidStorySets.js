@@ -4,11 +4,14 @@ import {
   StyleSheet,
   TextInput,
   ListView,
+  RecyclerViewBackedScrollView,
+  TouchableOpacity,
   Text
 } from 'react-native';
 
 import TopToolbar from '../components/TopToolbar';
 import { toastShort } from '../utils/ToastUtil';
+import ChidStorySet from './ChidStorySet';
 
 const toolbarActions = [
   { title: '创建', show: 'no' }
@@ -17,18 +20,20 @@ const toolbarActions = [
 class ChidStorySets extends React.Component {
   constructor(props) {
     super(props);
+    console.log(this.props);
     this.onActionSelected = this.onActionSelected.bind(this);
+    this.renderItem = this.renderItem.bind(this); 
     let dataSource = new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
     });
     this.state = {
-      dataSource: dataSource.cloneWithRows(this.props.storysets.storysets),
+      dataSource: dataSource.cloneWithRows(this.props.route.storysets),
     }
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      dataSource: dataSource.cloneWithRows(this.props.storysets.storysets),
+      dataSource: this.state.dataSource.cloneWithRows(this.props.route.storysets),
     });
   }
 
@@ -37,16 +42,19 @@ class ChidStorySets extends React.Component {
   }
 
   onPress(rowid) {
+    const { navigator } = this.props;
+    console.log(rowid)
     navigator.push({
       component: ChidStorySet,
       name: 'ChidStorySet',
-      rowid: rowid
+      rowid: rowid,
+      storysets: this.props.route.storysets
     });
   }
 
   renderItem(storyset, sectionid, rowid) {
     return (
-      <TouchableOpacity onPress={() => this.onPress(rowid)}>
+      <TouchableOpacity onPress={()=>this.onPress(rowid)}>
         <View style={styles.containerItem}>
           <Text>
              {storyset.title}
@@ -58,6 +66,7 @@ class ChidStorySets extends React.Component {
 
   render() {
     const { navigator } = this.props;
+    console.log(this.props);
     return (
       <View style={styles.container}>
         <TopToolbar
