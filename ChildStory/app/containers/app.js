@@ -22,7 +22,7 @@ class App extends React.Component {
   renderScene(route, navigator) {
     const Component = route.component;
     return (
-      <Component navigator={navigator} route={route} />
+      <Component navigator={navigator} route={route} {..this.props}/>
     );
   }
 

@@ -11,13 +11,12 @@ const initialState = {
 
 export default function storysets(state = initialState, action) {
   switch (action.type) {
-    case types.FETCH_STORYSET_LIST:
-      return state;
-    case types.RECEIVE_STORYSET_LIST:
-      return state;
-    case types.LOAD_STORYSET:
+    case types.UPDATE_LOCAL_STORYSET:
       return Object.assign({}, state, {
-        loading: true,
+        storysets: action.storysets
+      });
+    case types.LOAD_LOCAL_STORYSET:
+      return Object.assign({}, state, {
         storysets: action.storysets
       });
     default:

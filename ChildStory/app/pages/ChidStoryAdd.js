@@ -25,6 +25,8 @@ class ChildStoryAdd extends React.Component {
   onActionSelected() {
     const { navigator } = this.props;
     navigator.pop();
+    this.props.storysets.storysets[this.props.route.rowid].stories.push(feedbackText);
+    this.props.updateStorySet(this.props.storysets);
     // rowid, story content
   }
 
